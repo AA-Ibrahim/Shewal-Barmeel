@@ -1,0 +1,19 @@
+<h1> {{sess.username}}'s page </h1>
+
+<p>
+	Login details:
+</p>
+
+<p>Name: {{sess.firstName}} {{sess.lastName}}</p>
+<form method=post>
+	Username : <input type="text" name="username" value={{sess.username}}><br>
+	<br>
+	Password: <input type="password" name="password" value={{sess.password}}><br>
+	<br>
+	E-mail: <input type="email" name="email" value={{sess.email}}><br>
+	<br>
+	Date of birth: <input type="date" name="dob" value={{sess.dob}}><br>
+	<br>
+	<input type="submit" name="op" value="update">
+	<input type="submit" name="op" value="logout">
+</form>

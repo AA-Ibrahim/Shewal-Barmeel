@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cs 3100 Project</title>
+	<link rel="stylesheet" type="text/css" href="deptStyle.css">
+</head>
+<body>
+	
+	<!-- ************************************ Logo Section ************************************** -->
+
+	<div id="logo">
+		<a href="/landing">
+			<img src="Pictures/logo.png" alt="LOGO Goes Here">
+		</a>
+	
+	<!-- ************************************ Search Section ************************************** -->
+
+	<div id="Search_Bar">
+		<label for="search" style="color: black"> Search: </label>
+		<input type="text" name="Search" id="search">
+
+		<a style="float: right;" href="login"> Welcome, </a>
+		<script type="text/javascript">
+			let name = req.session.username;
+		</script>
+
+	</div>
+
+	<!-- ************************************ Navigations Section ************************************** -->
+
+	<div id="Navigation_Bar">
+		<ul>
+			<li class="ex1"> 
+				<a> Departments </a> 
+				<ul class="ex2">
+					<li> <a href="/food"> Food </a> </li>
+					<li> <a href="/clothing"> Clothes </a> </li>
+					<li> <a href="/electronics"> Electronics </a> </li>
+				</ul>
+			</li>
+			<li class="ex1"><a href="/flyers"> Flyers </a></li>
+			<li class="ex1"><a href="/recipes"> Recepies </a></li>
+			<li class="ex1"><a href="/catering"> Catering </a></li>
+		</ul>
+	</div>
+
+	<!-- ************************************ Sort by ************************************** -->
+	<div id="box">
+		
+	</div>
+	<div id="radio">
+		<a>Sort by</a>
+		<form action="">
+  			<input type="radio" name="sort" value="Price"> Price<br>
+  			<input type="radio" name="sort" value="Alphabetical"> Alphabetical<br>
+		</form>
+		<!-- ********************************************* department items ******************* -->
+		<pre id="display">
+			<ul id="items">
+			</ul>
+		</pre>
+		<script>
+		//        	<a href="#" id="mane"><img src="#" id="image"></a>
+		    let displayPre = document.getElementById('display');
+		    let items = document.getElementById('items');
+            	    let img = document.getElementById('image');
+            	    let req = new XMLHttpRequest();
+		    req.open('GET', '/gfood', true);
+		    req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+		    req.responseType = 'json';
+		    req.onload = function(){
+		        if(req.status == 200){
+		            let res = req.response;
+		            console.log('response', res);
+			    let i = 0;
+			    let name = "";
+			    let desc = "";
+			    let price = "";
+			    while(i < res.length){
+				name = `${res[i].name}` ;
+				desc = `${res[i].description}`;
+				price = `${res[i].price}`;
+				items.innerHTML += '<li><img src=/Pictures/' + name + '.jpg></li>';
+				items.innerHTML += '<li>'+ desc + '</li>';
+				items.innerHTML += '<li>' + price + '</li>';
+				items.innerHTML += '<br>';
+				items.innerHTML += '<button onclick="console.log("hoi")">Like</button>';
+				items.innerHTML += '<button onclick="">Add to Wishlist</button>';
+			        i = i+1;
+			    }
+//			    displayPre.textContent = str;
+//                            img.src = `/Pictures/${res.name}.jpg`;
+//                          aD.href = `${res.name}`;
+			}
+			else{
+			    console.log('err', req);
+			}
+		    }
+           	    req.send('Boo');
+		</script>
+	</div>
+
+	<!-- ************************************ Contact Us section ************************************** -->
+	<div id="contact_us">
+		<h2>Contact Us</h2>
+		<p>For more information about our services, or if you have any questions,
+			please contact us at:
+			<ul>
+				<li>Phone: 1 (709) 863-8358</li>
+				<li>E-mail: shewal.barmeel@gmail.com</li>
+				<li>Address: 60 Elizabeth Ave, St. John's, NL, Canada.</li>
+			</ul>
+		</p>
+	</div>
+</body>
+</html>

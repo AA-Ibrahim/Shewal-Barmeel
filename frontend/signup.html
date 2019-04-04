@@ -1,0 +1,85 @@
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<title>Account Registration</title>
+		<style>
+			h1{
+				color: white;
+				text-align: center;
+				display: block;
+				width: 100%;
+				background-color: #242424;
+				opacity: 0.8;
+			}
+			input{
+				border: 3px silver solid;
+			}
+			form{
+				text-align: right;
+				margin-right: 40%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="signup">
+			<h1 style=text-align:center>Create your account</h1>
+			<form method=post name="signup" onsubmit="check()">
+				First name:<input type="text" id="first" name="firstName"><br>
+				<br>
+				Last Name:<input type="text" id="last" name="lastName"><br>
+				<br>
+				Username:<input type="text" id="user" name="username"><br>
+				<br>
+				Password:<input type="password" id="pass" name="password"><br>
+				<br>
+				E-mail address:<input type="email" id="email" name="email"><br>
+				<br>
+				Date of birth:<input type="date" id="dob" name="dob"><br>
+				<br>
+				<input type="submit" value="Submit">
+			</form>
+		</div>
+		<script>
+			function check(){
+				let i = document.forms["signup"];
+				if(i["firstName"].value == ""){
+					alert('First name cannot be empty.');
+				}
+				else if(i["lastName"].value ==""){
+					alert('Last name cannot be empty.');
+				}
+				else if(i["username"].value ==""){
+					alert('Username cannot be empty.');
+				}
+				else if(i["password"].value ==""){
+					alert('Password cannot be empty.');
+				}
+				else if(i["email"].value ==""){
+					alert('E-mail address cannot be empty.');
+				}
+				else if(i["dob"].value ==""){
+					alert('Date of birth cannot be empty.');
+				}
+/*				else{
+					let req = new XMLHttpRequest();
+					req.open('GET', '/sign', true);	
+		    			req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+		   			req.responseType = 'json';
+		    			req.onload = function(){
+						if(req.status == 200){
+							let res = req.response;
+							let i = 0;
+							while(i < res.length){
+								user = `${res[i].username}`;
+								if(user == i["username"].value){
+									alert('Username already exists!');
+								}
+								i = i+1;
+							}
+						}
+					}
+				}*/
+			}
+		</script>
+	</body>
+</html>

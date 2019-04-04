@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Login</title>
+    <style>
+        h1{
+            color: white;
+            text-align: center;
+            display: block;
+            width: 100%;
+            background-color: #242424;
+            opacity: 0.8;
+        }
+        input{
+            border: 3px silver solid;
+        }
+        div{
+            text-align: right;
+            margin-right: 40%;
+        }
+        form{
+            text-align: right;
+        }
+    
+    </style>
+    <script>
+	function check(){
+		let j = document.forms["login"];
+		if(j["username"].value == ""){
+			alert('Please enter your username.');
+		}
+		else if(j["password"].value == ""){
+			alert('Please enter your password.');
+		}
+	}
+    </script>
+</head>
+<body>
+    <h1>Login into your Account</h1>
+    <div id="login">
+      <form method=post name="login" onsubmit="check()">
+        Username: <input type="text" name="username" id="field">
+
+        <br>
+
+        Password: <input type="password" name="password" id="field">
+        <br>
+
+        <input type="submit" value="Submit">
+      </form>    
+        <p>Not registered? Sign up here.</p>
+	<button onclick="window.location.href = '/signup';">Register</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "grocery-store-online-inventory",
+  "version": "1.0.0",
+  "description": "CS 3100 team project",
+  "main": "demo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OmarBlood/Grocery-Store-online-inventory.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OmarBlood/Grocery-Store-online-inventory/issues"
+  },
+  "homepage": "https://github.com/OmarBlood/Grocery-Store-online-inventory#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-session": "^1.3.3",
+    "express": "^4.16.4",
+    "express-hbs": "^2.0.2",
+    "sqlite3": "^4.0.6",
+    "string-format": "^2.0.0"
+  }
+}

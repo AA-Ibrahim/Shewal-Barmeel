@@ -1,0 +1,185 @@
+body{
+  background-color: rgb(240, 210, 186);
+  background-image: url(Pictures/ground.png);
+  background-repeat: repeat;
+}
+div{
+  display: block;
+}
+/************************************** Logo Style ********************************************/
+#logo img{
+  width: 300px;
+}
+#logo a{
+  text-align: center;
+  display: block;
+}
+/************************************** Search Bar Style ********************************************/
+
+#Search_Bar label{
+  margin-left: 20px;
+}
+#Search_Bar input{
+  border: 3px silver solid;
+}
+#Search_Bar a{
+  margin-right: 20px;
+}
+
+/************************************** Navigation Bar Style ********************************************/
+
+div#Navigation_Bar{
+  display: block;
+  font-family: Arial;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  z-index: 0;
+}
+#Navigation_Bar ul{
+  list-style: none;
+  margin: 0%;
+  padding: 0%;
+}
+#Navigation_Bar .ex1{
+  width: 25%;
+	height: 5%;
+	float: left;
+	background-color: #53435B;
+	opacity: 0.8;
+	line-height: 40px;
+	text-align: center;
+}
+#Navigation_Bar li.ex1 a{
+  text-decoration: none;
+  color: white;
+}
+#Navigation_Bar ul li:hover{
+  background-color: rgb(122, 128, 126);
+}
+#Navigation_Bar .ex2 li{
+  display: none;
+  background-color: #53435B
+}
+#Navigation_Bar ul li:hover ul.ex2 li{
+  display: block;
+}
+
+/************************************** Slideshow Style ********************************************/
+
+#Slideshow{
+  font-family: Verdana;
+  z-index: -2;
+}
+#Slideshow img{
+  z-index: -3;
+}
+/* Slideshow container */
+#Slideshow .slideshow-container {
+  max-width: 30%;
+  position: relative;
+  margin-top: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: lightgrey;
+  z-index: -2;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: relative;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 17px;
+  position: relative;
+  width: 100%;
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: relative;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
+
+/************************************** Last Viewed Item Style ********************************************/
+
+#last_viewed_item h4{
+  display: block;
+  width: 100%;
+  height: 30px;
+  background-color: #53435B;
+  opacity: 0.8;
+  color: white;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+/************************************** Contact Us Style ********************************************/
+
+#contact_us h2{
+  color: white;
+  text-align: center;
+  display: block;
+  width: 100%;
+  background-color: #53435B;
+  opacity: 0.8;
+}
+#contact_us p{
+  color: black;
+  display: block;
+}
+#contact_us{
+  display: block
+}
