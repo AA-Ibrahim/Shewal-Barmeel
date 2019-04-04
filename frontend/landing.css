@@ -18,12 +18,16 @@ div{
 
 #Search_Bar label{
   margin-left: 20px;
+  font-size: 120%;
+  font-weight: bold;
 }
 #Search_Bar input{
   border: 3px silver solid;
 }
 #Search_Bar a{
   margin-right: 20px;
+  font-size: 120%;
+  font-weight: bold;
 }
 
 /************************************** Navigation Bar Style ********************************************/
