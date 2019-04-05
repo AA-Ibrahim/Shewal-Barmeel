@@ -49,7 +49,6 @@
 		
 	</div>
 	<div id="radio">
-		<a>Sort by</a>
 		<form action="">
   			<input type="radio" name="sort" value="Price"> Price<br>
   			<input type="radio" name="sort" value="Alphabetical"> Alphabetical<br>
@@ -81,8 +80,8 @@
 				desc = `${res[i].description}`;
 				price = `${res[i].price}`;
 				items.innerHTML += '<li><img src=/Pictures/' + name + '.jpg></li>';
-				items.innerHTML += '<li>'+ desc + '</li>';
-				items.innerHTML += '<li>' + price + '</li>';
+				items.innerHTML += '<li> Description: '+ desc + '</li>';
+				items.innerHTML += '<li> Price: $' + price + '.00 </li>';
 				items.innerHTML += '<br>';
 				items.innerHTML += '<button onclick="console.log("hoi")">Like</button>';
 				items.innerHTML += '<button onclick="">Add to Wishlist</button>';

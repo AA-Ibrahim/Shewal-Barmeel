@@ -78,18 +78,42 @@ body{
     padding-top: 5px;
     padding-left: 5px;
   }
+  
   #items{
     margin-left: auto;
     margin-right: auto;
     list-style: none;
   }
   #items img{
-      width: 40%;
+      width: 20%;
   }
-  #items li{
-    display: inline;
+  #items li:nth-child(even){
+    background-color: rgb(256, 256, 256, 0.8);
+    width: 50%;
+    font-size: 16pt;
+    font-weight: bold;
+    font-family: Arial;
+    padding: 5px;
   }
-  
+  #items li:nth-child(3n){
+    background-color: rgb(256, 256, 256, 0.8);
+    width: 50%;
+    font-size: 16pt;
+    font-weight: bold;
+    font-family: Arial;
+    padding: 5px;
+  }
+  #radio form{
+    float: right;
+    font-weight: bold;
+    font-size: 130%;
+    background-color: rgb(256, 256, 256, 0.7);
+    border-radius: 15%;
+    padding: 1%;
+  }
+  #radio{
+    margin-top: 120px;
+  }
   /************************************** Contact Us Style ********************************************/
   
   #contact_us h2{
