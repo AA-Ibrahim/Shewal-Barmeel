@@ -1,19 +1,55 @@
-<h1> {{sess.username}}'s page </h1>
+<head>
+	<title>{{sess.username}}'s page</title>
+	<link rel="stylesheet" type="text/css" href="deptStyle.css">
+</head>
+<body>
+	<div id="logo">
+		<a href="/landing">
+			<img src="Pictures/logo.png" alt="LOGO Goes Here">
+		</a>
+	</div>
+	<br>
+	<div id="Navigation_Bar">
+		<ul>
+			<li class="ex1"> 
+				<a> Departments </a> 
+				<ul class="ex2">
+					<li> <a href="/food"> Food </a> </li>
+					<li> <a href="/clothing"> Clothes </a> </li>
+					<li> <a href="/electronics"> Electronics </a> </li>
+				</ul>
+			</li>
+			<li class="ex1"><a href="/flyers"> Flyers </a></li>
+			<li class="ex1"><a href="/recipes"> Recepies </a></li>
+			<li class="ex1"><a href="/catering"> Catering </a></li>
+		</ul>
+	</div>
+	<h1> {{sess.username}}'s page </h1>
 
-<p>
-	Login details:
-</p>
+	<p>
+		Login details:
+	</p>
 
-<p>Name: {{sess.firstName}} {{sess.lastName}}</p>
-<form method=post>
-	Username : <input type="text" name="username" value={{sess.username}}><br>
-	<br>
-	Password: <input type="password" name="password" value={{sess.password}}><br>
-	<br>
-	E-mail: <input type="email" name="email" value={{sess.email}}><br>
-	<br>
-	Date of birth: <input type="date" name="dob" value={{sess.dob}}><br>
-	<br>
-	<input type="submit" name="op" value="update">
-	<input type="submit" name="op" value="logout">
-</form>
+	<p>Name: {{sess.firstName}} {{sess.lastName}}</p>
+	<form method=post>
+		First Name: <input type="text" name="firstName" value={{sess.firstName}}><br>
+		<br>
+		Last Name : <input type="text" name="lastName" value={{sess.lastName}}><br>
+		<br>
+		Username : <input type="text" name="username" value={{sess.username}}><br>
+		<br>
+		Password: <input type="password" name="password" value={{sess.password}}><br>
+		<br>
+		E-mail: <input type="email" name="email" value={{sess.email}}><br>
+		<br>
+		Date of birth: <input type="date" name="dob" value={{sess.dob}}><br>
+		<br>
+		<input type="submit" name="op" value="update">
+		<input type="submit" name="op" value="logout">
+	</form>
+	<div>
+		<h4>This is your saved wish item:</h4>
+			<img src="/Pictures/{{sess.wishlist}}.jpg">
+			<p>{{sess.wishlist}}</p>
+	</div>
+</body>

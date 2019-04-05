@@ -23,7 +23,8 @@ const db = new sqlite3.Database( __dirname + '/userbase.db',
 				email TEXT,
 				dob DATE,
 				administration BOOLEAN,
-				recent_items VARCHAR
+				recent_items VARCHAR,
+				wishlist VARCHAR
 			)`);
 			
 			console.log('opened userbase.db');
@@ -112,29 +113,29 @@ foods = [
 
 //----Pushing data into clothing database----//
 clothes = [
-	[13, 'black', 'Massimo Dutti, made in Pakistan', 'Cotton', 'Casual', 'Large','$39.99'],
-	[14 , 'blueblouse' , ' Sadie, made in China' , 'Rayon', 'Casual', 'Large','$60.00'],
-	[15 , 'cap' , ' Swagster, made in Turkey' , 'Polyester and Cotton', 'Casual', 'One size','$15.00'],
-	[16 , 'fanela' , ' cottonil, made in Egypt' , 'Cotton', 'Homewear', 'Small','$5.00'],
-	[17 , 'greenblouse' , ' Sadie, made in china' , 'Rayon', 'casual', 'XXL','$55.00'],
-	[18, 'jeans', 'Barbados, made in China', 'Cotton', 'Casual', 'Medium','$70.00'],
-	[19, 'jeans2', 'Barbados, made in China', 'Cotton', 'Casua', 'Large','$75.00'],
-	[20 , 'oompa' , 'Gucci overalls, Made in loompa' , 'Cotton and thread', 'Work', 'XXXXL','$213.50'],
-	[21, 'shoe', 'Tahari, made in China', 'Leather and Felt', 'Sport' ,'Size 9', '$185.00']
+	[13, 'black', 'Massimo Dutti, made in Pakistan', 'Cotton', 'Casual', 'Large', 40],
+	[14 , 'blueblouse' , ' Sadie, made in China' , 'Rayon', 'Casual', 'Large', 60],
+	[15 , 'cap' , ' Swagster, made in Turkey' , 'Polyester and Cotton', 'Casual', 'One size', 15],
+	[16 , 'fanela' , ' cottonil, made in Egypt' , 'Cotton', 'Homewear', 'Small', 5],
+	[17 , 'greenblouse' , ' Sadie, made in china' , 'Rayon', 'casual', 'XXL', 55],
+	[18, 'jeans', 'Barbados, made in China', 'Cotton', 'Casual', 'Medium', 70],
+	[19, 'jeans2', 'Barbados, made in China', 'Cotton', 'Casua', 'Large', 75],
+	[20 , 'oompa' , 'Gucci overalls, Made in loompa' , 'Cotton and thread', 'Work', 'XXXXL', 214],
+	[21, 'shoe', 'Tahari, made in China', 'Leather and Felt', 'Sport' ,'Size 9',  185]
 ];
 
 
 //----Pushing data into electronics database----//
 electronics = [
-	[22, 'Laptop', '480', 'Intel Core i3, 4GB RAM, 500GB Storage.', 'HP','computers'],
-	[23, 'TV', '278', '55-inch Screen with a 4K UltraHD display. Multiple HDMI and USB inputs.', 'LG', 'screens'],
-	[24, 'Headphones', '59', 'Bluetooth, NFC Fucntionality, internal battery supports upto 30 hours of use.', 'Beats', 'accessories'],
-	[25, 'Blender', '42', '800 Watts, two-speeds control, 5 blades.', 'Hamilton', 'appliances'],
-	[26, 'Mixer', '31', '150 Watts, three-speeds control, additional accessories included.', 'Orca', 'appliances'],
-	[27, 'iPhone', '829', '128GB, Silver, Unlocked 5.3-inch display, face recognition, 8MP Camera.', 'Apple', 'phones'],
-	[28, 'Android', '720', '128GB, Gold, 4GB RAM, 5-inch display, 8MP Camera, Fingerprint scanner.', 'Samsung', 'phones'],
-	[29, 'Microwave', '60', '700 Watts, 10 power levels, child safety lock, weight and time defrost.', 'Danby', 'appliances'],
-	[30, 'Coffee', '138', '14 oz water reservoir, single capacity, packages and ground coffee compatible.', 'Nespresso', '']
+	[22, 'Laptop', 480, 'Intel Core i3, 4GB RAM, 500GB Storage.', 'HP','computers'],
+	[23, 'TV', 278, '55-inch Screen with a 4K UltraHD display. Multiple HDMI and USB inputs.', 'LG', 'screens'],
+	[24, 'Headphones', 59, 'Bluetooth, NFC Fucntionality, internal battery supports upto 30 hours of use.', 'Beats', 'accessories'],
+	[25, 'Blender', 42, '800 Watts, two-speeds control, 5 blades.', 'Hamilton', 'appliances'],
+	[26, 'Mixer', 31, '150 Watts, three-speeds control, additional accessories included.', 'Orca', 'appliances'],
+	[27, 'iPhone', 829, '128GB, Silver, Unlocked 5.3-inch display, face recognition, 8MP Camera.', 'Apple', 'phones'],
+	[28, 'Android', 720, '128GB, Gold, 4GB RAM, 5-inch display, 8MP Camera, Fingerprint scanner.', 'Samsung', 'phones'],
+	[29, 'Microwave', 60, '700 Watts, 10 power levels, child safety lock, weight and time defrost.', 'Danby', 'appliances'],
+	[30, 'Coffee', 138, '14 oz water reservoir, single capacity, packages and ground coffee compatible.', 'Nespresso', 'appliances']
 ];
 
 //----Server initialization----//
@@ -161,7 +162,6 @@ app.use(cookieSession({
 function reg_check(req,res){
 	let user = '';
 	let pass = '';
-	let msg = {};
 	//----Check for blanks----//
 	if(!req.body.firstName){
 		res.redirect('/signup');
@@ -238,6 +238,79 @@ function reg_check(req,res){
 	
 }
 
+function sortf(req,res){
+	//console.log(req.body.add);
+	if(req.body.add != undefined){
+		req.session.wishlist = req.body.add;
+		db.run(`UPDATE users SET wishlist=? WHERE id=?`, [req.body.add, req.session.id]);
+		console.log('Added item to wishlist');
+	}
+	if(req.body.like != undefined){
+		req.session.recent_items = req.body.like;
+		db.run(`UPDATE users SET recent_items=? WHERE id=?`, [req.body.like, req.session.id]);
+		console.log('Added item to your recently viewed items section.');
+	}
+	if(req.body.price == undefined){
+		req.session.price = null;
+	}
+	else if(req.body.price == 'pa'){
+		req.session.price = 1;
+	}
+	else if(req.body.price == 'pd'){
+		req.session.price = 2;
+	}
+	//console.log(req.session);
+	res.redirect('/food');
+}
+
+function sortc(req,res){
+	//console.log(req.body.add);
+	if(req.body.add != undefined){
+		db.run(`UPDATE users SET wishlist=? WHERE id=?`, [req.body.add, req.session.id]);
+		console.log('Added item to wishlist');
+	}
+	if(req.body.like != undefined){
+		req.session.like = req.body.like;
+		db.run(`UPDATE users SET recent_items=? WHERE id=?`, [req.body.like, req.session.id]);
+		console.log('Added item to your recently viewed items section.');
+	}
+	if(req.body.price == undefined){
+		req.session.price = null;
+	}
+	else if(req.body.price == 'pa'){
+		req.session.price = 1;
+	}
+	else if(req.body.price == 'pd'){
+		req.session.price = 2;
+	}
+	//console.log(req.session);
+	res.redirect('/clothing');
+}
+
+function sorte(req,res){
+	//console.log(req.body.add);
+	if(req.body.add != undefined){
+		db.run(`UPDATE users SET wishlist=? WHERE id=?`, [req.body.add, req.session.id]);
+		console.log('Added item to wishlist');
+	}
+	if(req.body.like != undefined){
+		req.session.like = req.body.like;
+		db.run(`UPDATE users SET recent_items=? WHERE id=?`, [req.body.like, req.session.id]);
+		console.log('Added item to your recently viewed items section.');
+	}
+	if(req.body.price == undefined){
+		req.session.price = null;
+	}
+	else if(req.body.price == 'pa'){
+		req.session.price = 1;
+	}
+	else if(req.body.price == 'pd'){
+		req.session.price = 2;
+	}
+	//console.log(req.session);
+	res.redirect('/electronics');
+}
+
 app.get('/', function(req,res) {
 	res.redirect('/landing');
 });
@@ -261,54 +334,186 @@ app.get('/landing', function(req,res) {
 
 //----Endpoints for XMLHttpRequest----//
 app.get('/land', function(req,res) {
+	var msg = [];
 	var it = 11;
-	if(it >= 0 && it <= 12){
-		dbf.get(`SELECT * FROM food WHERE id = ?`, [it], function(err, row) {
+	if(req.session.auth == true){
+		console.log('A session happened');
+		db.get(`SELECT recent_items FROM users WHERE id = ?`, [req.session.id], function(err,row){
 			if(err){
 				console.log(err);
 			}
-			else if(!err){
+			else{
 				if(row){
-					r = JSON.stringify(row);
-					res.send(r);
-					res.end();
-					console.log('sending from food database');
-				}
-			}
-		});
-	}
-	else if(it >= 13 && it <= 21){
-		dbc.get(`SELECT * FROM clothing WHERE id = ?`, [it], function(err, row) {
-			if(err){
-				console.log(err);
-			}
-			else if(!err){
-				if(row){
-					r = JSON.stringify(row);
-					res.send(r);
-					res.end();
-					console.log('sending from clothing database');
-				}
-			}
-		});
-	}
-	else if(it >= 22 && it <= 30){
-		dbe.get(`SELECT * FROM electronic WHERE id = ?`, [it], function(err, row) {
-			if(err){
-				console.log(err);
-			}
-			else if(!err){
-				if(row){
-					r = JSON.stringify(row);
-					res.send(r);
-					res.end();
-					console.log('sending from electronics database');
+					if(row.recent_items != null){
+						console.log('Found a recent item');
+						it = row.recent_items;
+						//console.log(it);
+						if(it >= 0 && it <= 12){
+							dbf.get(`SELECT * FROM food WHERE id = ?`, [it], function(err, row) {
+								if(err){
+									console.log(err);
+								}
+								else if(!err){
+									if(row){
+										msg.push(row);
+										msg.push(req.session);
+										r = JSON.stringify(msg);
+										res.send(r);
+										res.end();
+										console.log(r);
+									}
+								}
+							});
+						}
+						else if(it >= 13 && it <= 21){
+							dbc.get(`SELECT * FROM clothing WHERE id = ?`, [it], function(err, row) {
+								if(err){
+									console.log(err);
+								}
+								else if(!err){
+									if(row){
+										msg.push(row);
+										msg.push(req.session);
+										r = JSON.stringify(msg);
+										res.send(msg);
+										res.end();
+										console.log(r);
+									}
+								}
+							});
+						}
+						else if(it >= 22 && it <= 30){
+							dbe.get(`SELECT * FROM electronic WHERE id = ?`, [it], function(err, row) {
+								if(err){
+									console.log(err);
+								}
+								else if(!err){
+									if(row){
+										msg.push(row);
+										msg.push(req.session);
+										r = JSON.stringify(msg);
+										res.send(msg);
+										res.end();
+										console.log(r);
+									}
+								}
+							});
+						}
+					}
+					else{
+						//console.log(it);
+						if(it >= 0 && it <= 12){
+							dbf.get(`SELECT * FROM food WHERE id = ?`, [it], function(err, row) {
+								if(err){
+									console.log(err);
+								}
+								else if(!err){
+									if(row){
+										msg.push(row);
+										msg.push(req.session);
+										r = JSON.stringify(msg);
+										res.send(r);
+										res.end();
+										console.log(r);
+									}
+								}
+							});
+						}
+						else if(it >= 13 && it <= 21){
+							dbc.get(`SELECT * FROM clothing WHERE id = ?`, [it], function(err, row) {
+								if(err){
+									console.log(err);
+								}
+								else if(!err){
+									if(row){
+										msg.push(row);
+										msg.push(req.session);
+										r = JSON.stringify(msg);
+										res.send(msg);
+										res.end();
+										console.log(r);
+									}
+								}
+							});
+						}
+						else if(it >= 22 && it <= 30){
+							dbe.get(`SELECT * FROM electronic WHERE id = ?`, [it], function(err, row) {
+								if(err){
+									console.log(err);
+								}
+								else if(!err){
+									if(row){
+										msg.push(row);
+										msg.push(req.session);
+										r = JSON.stringify(msg);
+										res.send(msg);
+										res.end();
+										console.log(r);
+									}
+								}
+							});
+						}
+					}
 				}
 			}
 		});
 	}
 	else{
-		console.log('ID does not exist');
+		console.log(it);
+		if(it >= 0 && it <= 12){
+			dbf.get(`SELECT * FROM food WHERE id = ?`, [it], function(err, row) {
+				if(err){
+					console.log(err);
+				}
+				else if(!err){
+					if(row){
+						msg.push(row);
+						msg.push(req.session);
+						r = JSON.stringify(msg);
+						res.send(r);
+						res.end();
+						console.log(r);
+						//console.log('sending from food database');
+					}
+				}
+			});
+		}
+		else if(it >= 13 && it <= 21){
+			dbc.get(`SELECT * FROM clothing WHERE id = ?`, [it], function(err, row) {
+				if(err){
+					console.log(err);
+				}
+				else if(!err){
+					if(row){
+						msg.push(row);
+						msg.push(req.session);
+						r = JSON.stringify(msg);
+						res.send(msg);
+						res.end();
+						console.log(r);
+						//console.log('sending from clothing database');
+					}
+				}
+			});
+		}
+		else if(it >= 22 && it <= 30){
+			dbe.get(`SELECT * FROM electronic WHERE id = ?`, [it], function(err, row) {
+				if(err){
+					console.log(err);
+				}
+				else if(!err){
+					if(row){
+						msg.push(row);
+						msg.push(req.session);
+						r = JSON.stringify(msg);
+						res.send(msg);
+						res.end();
+						console.log(r);
+						//console.log('sending from electronics database');
+					}
+				}
+			});
+		}
 	}
 
 });
@@ -317,34 +522,85 @@ app.get('/catering', function(req,res) {
 	res.redirect('/catering.html');
 });
 
+
 app.get('/recipes', function(req,res) {
 	res.redirect('/recipes.html');
 });
 
+
 app.get('/flyers', function(req,res) {
 	res.redirect('/Flyers.html');
 });
+
+app.get('/user_log', function(req,res) {
+	r = JSON.stringify(req.session);
+	res.send(r);
+	res.end();
+});
+
 app.get('/food', function(req,res) {
 	res.redirect('/food.html');
 });
 
+app.post('/food.html', sortf, function(req,res) {
+});
 
 app.get('/gfood', function(req,res) {
 	msg = [];
-	dbf.all(`SELECT * FROM food ORDER BY (price) ASC`, [], function(err, rows) {
-		if(err){
-			console.log(err);
-		}
-		else if(!err){
-			for(row of rows){
-				msg.push(row);
+	if(req.session.price == null){
+		dbf.all(`SELECT * FROM food`, [], function(err, rows) {
+			if(err){
+				console.log(err);
 			}
-			r = JSON.stringify(msg);
-			res.send(msg);
-			res.end();
-			console.log('sending everything from food.');
-		}
-	});
+			else if(!err){
+				msg.push(req.session);
+				for(row of rows){
+					msg.push(row);
+				}
+				r = JSON.stringify(msg);
+				res.send(r);
+				res.end();
+				console.log('sending everything from food.');
+			}
+		});
+	}
+	else if(req.session.price == 1){
+		dbf.all(`SELECT * FROM food ORDER BY (price) ASC`, [], function(err, rows) {
+			if(err){
+				console.log(err);
+			}
+			else if(!err){
+				msg.push(req.session);
+				for(row of rows){
+					msg.push(row);
+				}
+				r = JSON.stringify(msg);
+				res.send(r);
+				res.end();
+				console.log('sending everything from food.');
+			}
+		});
+	}
+	else if(req.session.price == 2){
+		dbf.all(`SELECT * FROM food ORDER BY (price) DESC`, [], function(err, rows) {
+			if(err){
+				console.log(err);
+			}
+			else if(!err){
+				msg.push(req.session);
+				for(row of rows){
+					msg.push(row);
+				}
+				r = JSON.stringify(msg);
+				res.send(r);
+				res.end();
+				console.log('sending everything from food.');
+			}
+		});
+	}
+	else{
+		console.log('What in tarnation do you think you are doing, boy?')
+	}
 
 });
 
@@ -365,7 +621,7 @@ app.get('/gclothing', function(req,res) {
 			r = JSON.stringify(msg);
 			res.send(msg);
 			res.end();
-			console.log('sending everything from clothing.');
+			//console.log('sending everything from clothing.');
 		}
 	});
 
@@ -388,14 +644,10 @@ app.get('/gelectronics', function(req,res) {
 			r = JSON.stringify(msg);
 			res.send(msg);
 			res.end();
-			console.log('sending everything from electronics.');
+			//console.log('sending everything from electronics.');
 		}
 	});
 
-});
-
-app.get('/item', function(req,res) {
-	req.session.recent_items = req.body.id;
 });
 
 //----Endpoint for login and signup pages----//
@@ -461,7 +713,7 @@ app.post('/login.html', function(req,res) {
 	//----Check for existing username and password----//
 	if(req.body.username && req.body.password){
 		console.log('Checking database for entries');
-		db.get(`SELECT firstName, lastName, username, password, email, dob, administration FROM users where username = ? AND password = ?`,[req.body.username, req.body.password], function(err, row) {
+		db.get(`SELECT id, firstName, lastName, username, password, email, dob, administration, recent_items, wishlist FROM users where username = ? AND password = ?`,[req.body.username, req.body.password], function(err, row) {
 			if(err){
 				console.log(err);
 				res.redirect('/login');
@@ -470,6 +722,7 @@ app.post('/login.html', function(req,res) {
 				if(row){
 					console.log('Entry found; credentials check');
 					req.session.auth = true;
+					req.session.id = row.id;
 					req.session.firstName = row.firstName;
 					req.session.lastName = row.lastName;
 					req.session.username = req.body.username;
@@ -477,15 +730,17 @@ app.post('/login.html', function(req,res) {
 					req.session.email = row.email;
 					req.session.dob = row.dob;
 					req.session.administration = row.administration;
+					req.session.recent_items = row.recent_items;
+					req.session.wishlist = row.wishlist;
 					if(req.session.administration === 1){
 						console.log('Login successful. Welcome admin!');
 						//console.log(req.session);
-						res.redirect('/admin');
+						res.redirect('/landing');
 					}
 					else{
 						console.log('Login successful. Welcome!');
-						console.log(req.session);
-						res.redirect('/page');
+					//	console.log(req.session);
+						res.redirect('/landing');
 					}
 				}
 				else{
@@ -520,8 +775,8 @@ app.get('/page', function(req,res) {
 app.post('/page', function(req,res) {
 	res.type('.html');
 	if(req.body.op === 'update'){
-		db.run(`UPDATE users SET username=?, password=?, email=?, dob=? WHERE firstName=? AND lastName=?`,
-	       		[req.body.username, req.body.password, req.body.email, req.body.dob, req.session.firstName, req.session.lastName], function(err){
+		db.run(`UPDATE users SET firstName=?, lastName=?, username=?, password=?, email=?, dob=? WHERE id=?`,
+	       		[req.body.firstName, req.body.lastName, req.body.username, req.body.password, req.body.email, req.body.dob, req.session.id], function(err){
 			if(!err){
 				if(req.session.administration == 1){
 					res.redirect('/admin');
@@ -530,10 +785,14 @@ app.post('/page', function(req,res) {
 					res.redirect('/login');
 				}
 			}
+			else{
+				console.log(err);
+			}
 		});
 	}
 	else if(req.body.op === 'logout'){
 		if(req.session.administration === 1){
+			req.session.id = '1'
 			req.session.firstName = 'admin';
 			req.session.lastName = '1';
 			req.session.username = 'admin1';
@@ -584,7 +843,7 @@ app.get('/user_table', function(req,res){
 
 app.post('/admin.html', function(req,res){
 	if(req.body.op === 'modify'){
-		db.get(`SELECT firstName, lastName, username, password, email, dob, administration FROM users where username = ?`,[req.body.username], function(err, row) {
+		db.get(`SELECT id, firstName, lastName, username, password, email, dob, administration FROM users where username = ?`,[req.body.username], function(err, row) {
 			if(err){
 				console.log(err);
 				res.redirect('/admin');
@@ -597,13 +856,14 @@ app.post('/admin.html', function(req,res){
 					}
 					else{
 						console.log('User found; redirecting to user page for modification.');
+						req.session.id = row.id;
 						req.session.firstName = row.firstName;
 						req.session.lastName = row.lastName;
 						req.session.username = req.body.username;
 						req.session.password = row.password;
 						req.session.email = row.email;
 						req.session.dob = row.dob;
-						console.log(req.session);
+					//	console.log(req.session);
 						res.redirect('/page');
 					}
 				}
@@ -616,7 +876,7 @@ app.post('/admin.html', function(req,res){
 		});
 	}
 	else if(req.body.op === 'delete'){
-		db.get(`SELECT firstName, lastName, username, password, email, dob, administration FROM users where username = ?`,[req.body.username], function(err, row) {
+		db.get(`SELECT id, firstName, lastName, username, password, email, dob, administration FROM users where username = ?`,[req.body.username], function(err, row) {
 			if(err){
 				console.log(err);
 				res.redirect('/admin');
@@ -649,18 +909,6 @@ app.post('/admin.html', function(req,res){
 		});
 	}
 
-/*		else{
-			db.run(`DELETE FROM users WHERE username=?`, [req.body.username], function(err){
-				if(err){
-					console.log(err);
-					res.redirect('/admin');
-				}
-				else{
-					console.log('Delete successful. User no longer exists!');
-					res.redirect('/admin');
-				}
-			});
-		}*/
 	else if(req.body.op === 'logout'){
 		req.session = null;
 		res.redirect('/landing');
